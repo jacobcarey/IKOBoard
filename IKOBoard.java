@@ -11,12 +11,11 @@ class IKOBoard {
 
     public static void main(String[] arrstring) {
         GrovePi grovePi = new GrovePi();
-        grovePi.pinMode(2, PinMode.INPUT);
+        grovePi.pinMode(Pin.ANALOG_PIN_2, PinMode.INPUT);
 
         // Objects needed for setup. 
-        Led led = grovePi.getDeviceFactory().createLed(2);
-        RoterySensor rotery = grovePi.getDeviceFactory().createLed(3);
-        ButtonSensor buttonSensor = grovePi.getDeviceFactory().createButtonSensor(4);
+        Led led = grovePi.getDeviceFactory().createLed(Pin.DIGITAL_PIN_2);
+        ButtonSensor buttonSensor = grovePi.getDeviceFactory().createButtonSensor(Pin.DIGITAL_PIN_3);
         led.setState(false);
 
         // DEBUG:
@@ -43,7 +42,7 @@ class IKOBoard {
             // Make LED blink. 
             do {
                 led.setState(true);
-                grovePi.coomon.Delay.milliseconds(500);
+                grovePi.common.Delay.milliseconds(500);
                 led.setState(false);
                 grovePi.common.Delay.milliseconds(500);
             } while (true);
@@ -51,11 +50,10 @@ class IKOBoard {
 
         if (debugTest == 3) {
             // Sense for volume change. 
-            grovePi.analogRead(Pin.ANALOG_PIN_2);
             int state = grovePi.analogRead(Pin.ANALOG_PIN_2);
             do {
                 // When value changes, print it out.
-                if (state = !grovePi.analogRead(Pin.ANALOG_PIN_2)) {
+                if (state != grovePi.analogRead(Pin.ANALOG_PIN_2)) {
                     System.out.println("Volume: " + state);
                     state = grovePi.analogRead(Pin.ANALOG_PIN_2);
                     continue;
